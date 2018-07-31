@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Add page</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <section>
+        <div class="jumbotron">
+            <div class="container">
+            
+                  <h1>The book was successfully added to the library.</h1>
+            </div>
+        </div>
+    </section>
+     <section th:if="${book}"  class="container">
+                    <div class="row">
+                        <div class="col-md-5" th:object="${book}">
+                            <h3>Details of added book:</h3>
+                            <p>
+                                <strong>Book title: </strong><span th:text="${book.title}"></span>
+                            </p>
+                            <p>
+                                <strong>Wrote by: </strong><span th:text="${book.authors}"></span>
+                            </p>
+                            <p>
+                                <strong>Status: </strong><span th:text="${book.status}"></span>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+    <section class="container">
+    <div class="row">
+        <div class="col-md-5">
+            
+            <p>
+                <a th:href="@{'/'}" class="btn btn-default">
+                    <span class="glyphicon-hand-left glyphicon"></span> Back to the home page
+                </a>
+
+            </p>
+
+        </div>
+    </div>
+</section>
+</div>
+</body>
+</html>

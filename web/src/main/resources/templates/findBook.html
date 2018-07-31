@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Find book</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 th:text="${message}"></h1>
+                <p th:text="${info}"></p>
+        </div>
+    </div>
+</section>
+<section class="container">
+    <form action="#" th:action="@{/searching}" th:object="${newBook}" method="get" class="form-horizontal">
+        <fieldset>
+            <legend>Enter parameters</legend>
+
+            <!-- Sample template for some fields in Book Entity -->
+            <div class="form-group">
+           
+                <label class="control-label col-lg-2" for="name">The title of the book beginning with a phrase:</label>
+                <div class="col-lg-10">
+                 <p> </p>
+                    <input id="name" type="text" th:field="*{title}" class="form:input-large" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="authors">Enter a phrase on behalf of or the name of the author:</label>
+                <div class="col-lg-10">
+                 <p> </p>
+                    <input id="authors" type="text" th:field="*{authors}" class="form:input-large" />
+                </div>
+            </div>
+           
+        </fieldset>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <input type="submit" id="btnAdd" class="btn btn-primary"
+                       value="Search"/>
+            </div>
+        </div>
+    </form>
+</section>
+</div>
+</body>
+</html>
