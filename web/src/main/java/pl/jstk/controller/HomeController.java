@@ -1,11 +1,11 @@
 package pl.jstk.controller;
 
-import pl.jstk.constants.ModelConstants;
-import pl.jstk.constants.ViewNames;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import pl.jstk.constants.ModelConstants;
+import pl.jstk.constants.ViewNames;
 
 @Controller
 public class HomeController {
@@ -24,5 +24,4 @@ public class HomeController {
 	public String login() {
 		return ViewNames.LOGIN;
 	}
-
 }

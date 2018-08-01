@@ -33,7 +33,7 @@
 									</a>
 								</p>
 								<p>
-								<form th:method="delete" th:action="@{/books/deleteBook}">
+								<form th:method="delete" th:action="@{/books/removedBook}">
 									<input type="hidden" name="id" th:value="${book.id}" />
 									<button class="btn btn-danger btn-lg" type="submit">Delete</button>
 								</form>

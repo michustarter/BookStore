@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="~{fragments/layout}">
+<head>
+<title>Removed book details</title>
+</head>
+<body>
+	<div layout:fragment="content" th:remove="tag">
+		<section>
+			<div class="jumbotron">
+				<div class="container">
+					<p th:text="${info}"></p>
+				</div>
+			</div>
+		</section>
+		<section class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<h1>The book with the chosen parameters has been successfully
+						removed</h1>
+
+					<p>
+						<a th:href="@{'/books'}" class="btn btn-primary btn-md"> <span
+							class="glyphicon-hand-left glyphicon"></span> Back to library
+							page
+						</a>
+
+					</p>
+				</div>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

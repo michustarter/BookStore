@@ -51,9 +51,6 @@ public class BookServiceImpl implements BookService {
 		if (title.isEmpty() && authors.isEmpty()) {
 			return searchedBooksList;
 		}
-		if (title=="" && authors=="") {
-				searchedBooksList = null;
-			}
 		if (title.equals("") && !authors.equals("")) {
 			searchedBooksList = findBooksByAuthor(authors);
 		}

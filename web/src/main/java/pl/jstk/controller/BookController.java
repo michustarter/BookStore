@@ -24,13 +24,13 @@ public class BookController {
 	private static final String INFO_TEXT_0 = "There are displayed books in the library";
 	private static final String INFO_TEXT_1 = "Searching result:";
 	private static final String INFO_TEXT_2 = "Here You shall add a new book";
-	private static final String INFO_TEXT_3 = "Here You shall display action of removing chosen book";
+	private static final String INFO_TEXT_3 = "Removed book title: ";
 	private static final String INFO_TEXT_4 = "You can search for a book";
 	private static final String ACCESS_DENIED="Only admin can remove book!";
 	protected static final String ALL_BOOKS = "Library page";
 	protected static final String BOOK_DETAILS = "Information about chosen book:";
 	protected static final String ADD_BOOK = "This is a page where you can add new book";
-	protected static final String DELETE_BOOK = "This is a page where you can delete book";
+	//protected static final String DELETE_BOOK = "This is a page where you can delete book";
 	protected static final String REMOVE_BOOKS = "This is a page where you remove chosen book";
 	protected static final String SUCCESSFULLY_ADDED = "the book was successfully added to the library.";
 	
@@ -85,14 +85,12 @@ public class BookController {
 	}
 
 	@Secured("ROLE_ADMIN")
-	@DeleteMapping(value = "/books/deleteBook")
+	@DeleteMapping(value = "/books/removedBook")
 	public String removeBook(@RequestParam(value = "id", defaultValue = "") Long id, Model model) {
 
+		model.addAttribute(ModelConstants.INFO, INFO_TEXT_3+bookService.getBook(id).getTitle());
 		bookService.deleteBook(id);
-		model.addAttribute(ModelConstants.MESSAGE, DELETE_BOOK);
-		model.addAttribute(ModelConstants.INFO, INFO_TEXT_3);
-
-		return ViewNames.WELCOME;
+		return "removedBook";
 	}
 	@ExceptionHandler({AccessDeniedException.class})
     public String handleException(Model model) {
