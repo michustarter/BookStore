@@ -9,24 +9,28 @@
 <div layout:fragment="content" th:remove="tag">
     <section>
         <div class="jumbotron">
+        <div class="container">
+					
+					<p th:text="${info}"></p>
+				</div>
             <div class="container">
              <section>
-                    <div th:if="${bookAdded}" class="alert alert-info">
-                        <P th:text="${bookAdded}"></P>
+                    <div th:if="*{bookAdded}" class="alert alert-info">
+                        <P th:field="*{bookAdded}"></P>
                     </div>
                 </section>
-                <section th:if="${book}"  class="container">
+                <section th:if="*{bookAdded}"  class="container">
                     <div class="row">
-                        <div class="col-md-5" th:object="${book}">
+                        <div class="col-md-5" th:object="*{book}">
                             <h3>Details of added book:</h3>
                             <p>
-                                <strong>Book title: </strong><span th:text="${book.title}"></span>
+                                <strong>Book title: </strong><span th:field="*{book.title}"></span>
                             </p>
                             <p>
-                                <strong>Wrote by: </strong><span th:text="${book.authors}"></span>
+                                <strong>Wrote by: </strong><span th:field="*{book.authors}"></span>
                             </p>
                             <p>
-                                <strong>Status: </strong><span th:text="${book.status}"></span>
+                                <strong>Status: </strong><span th:field="*{book.status}"></span>
                             </p>
                         </div>
                     </div>
@@ -36,7 +40,7 @@
         <div class="col-md-5">
             
             <p>
-                <a th:href="@{'/'}" class="btn btn-default">
+                <a th:href="@{'/'}" class="btn btn-primary">
                     <span class="glyphicon-hand-left glyphicon"></span> Back to the home page
                 </a>
 

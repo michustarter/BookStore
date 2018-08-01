@@ -23,16 +23,15 @@ import pl.jstk.to.BookTo;
 public class BookController {
 	private static final String INFO_TEXT_0 = "There are displayed books in the library";
 	private static final String INFO_TEXT_1 = "Searching result:";
-	private static final String INFO_TEXT_2 = "Here You shall add a new book";
+	private static final String INFO_TEXT_2 = "This is a page where you can add new book";
 	private static final String INFO_TEXT_3 = "Removed book title: ";
 	private static final String INFO_TEXT_4 = "You can search for a book";
+	private static final String INFO_TEXT_5 = "Book was successfully added!";
 	private static final String ACCESS_DENIED="Only admin can remove book!";
 	protected static final String ALL_BOOKS = "Library page";
 	protected static final String BOOK_DETAILS = "Information about chosen book:";
-	protected static final String ADD_BOOK = "This is a page where you can add new book";
-	//protected static final String DELETE_BOOK = "This is a page where you can delete book";
 	protected static final String REMOVE_BOOKS = "This is a page where you remove chosen book";
-	protected static final String SUCCESSFULLY_ADDED = "the book was successfully added to the library.";
+	protected static final String SUCCESSFULLY_ADDED = "The book was successfully added to the library.";
 	
 
 	BookService bookService;
@@ -62,12 +61,10 @@ public class BookController {
 		return ViewNames.BOOK;
 	}
 
-	// wchodzi do dodania ksiązki
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" }) 
 	@GetMapping(value = "/books/add")
 	public String createBook(Model model) {
 		model.addAttribute("newBook", new BookTo());
-		model.addAttribute(ModelConstants.MESSAGE, ADD_BOOK);
 		model.addAttribute(ModelConstants.INFO, INFO_TEXT_2);
 
 		return ViewNames.ADD_BOOK;
@@ -78,8 +75,7 @@ public class BookController {
 
 		bookService.saveBook(newBook);
 		model.addAttribute("newBook", new BookTo());
-		model.addAttribute(ModelConstants.MESSAGE, ADD_BOOK);
-		model.addAttribute(ModelConstants.INFO, INFO_TEXT_2);
+		model.addAttribute(ModelConstants.INFO, INFO_TEXT_5);
 		
 		return ViewNames.BOOK_ADDED;
 	}

@@ -56,5 +56,17 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
                 .and()
                 .withUser("user").password(passwordEncoder().encode("user")).roles("USER");
     }
+	
+	/*@Autowired 
+	DataSource dataSource;
+	
+	@Autowired
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+		    auth.jdbcAuthentication().dataSource(dataSource)
+		    .usersByUsernameQuery(           
+		    		"select username,password, enabled from user where username=?")   
+		    .authoritiesByUsernameQuery(
+		    		"select username, role from user_roles where username=?");
+		    }*/
 
 }
