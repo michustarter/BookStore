@@ -21,14 +21,13 @@ import pl.jstk.to.BookTo;
 
 @Controller
 public class BookController {
-	private static final String INFO_TEXT_0 = "Here You shall display all books contained in list";
-	private static final String INFO_TEXT_1 = "Here You shall display details of choosen book";
+	private static final String INFO_TEXT_0 = "There are displayed books in the library";
 	private static final String INFO_TEXT_2 = "Here You shall add a new book";
 	private static final String INFO_TEXT_3 = "Here You shall display action of removing chosen book";
 	private static final String INFO_TEXT_4 = "Here You shall display action of searching book";
 	private static final String ACCESS_DENIED="Only admin can remove book!";
-	protected static final String ALL_BOOKS = "This is a library page";
-	protected static final String BOOK_DETAILS = "This is a page with details about the book";
+	protected static final String ALL_BOOKS = "Library page";
+	protected static final String BOOK_DETAILS = "Information about chosen book:";
 	protected static final String ADD_BOOK = "This is a page where you can add new book";
 	protected static final String DELETE_BOOK = "This is a page where you can delete book";
 	protected static final String REMOVE_BOOKS = "This is a page where you remove chosen book";
@@ -57,14 +56,14 @@ public class BookController {
 	public String showBook(@RequestParam(value = "id", defaultValue = "") Long id, Model model) {
 
 		BookTo wantedBook = bookService.getBook(id);
-		model.addAttribute(ModelConstants.MESSAGE, BOOK_DETAILS);
-		model.addAttribute(ModelConstants.INFO, INFO_TEXT_1);
+		model.addAttribute(ModelConstants.INFO, BOOK_DETAILS);
 		model.addAttribute(ModelConstants.BOOK, wantedBook);
 
 		return ViewNames.BOOK;
 	}
 
 	// wchodzi do dodania ksiązki
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" }) 
 	@GetMapping(value = "/books/add")
 	public String createBook(Model model) {
 		model.addAttribute("newBook", new BookTo());
@@ -81,7 +80,7 @@ public class BookController {
 		model.addAttribute("newBook", new BookTo());
 		model.addAttribute(ModelConstants.MESSAGE, ADD_BOOK);
 		model.addAttribute(ModelConstants.INFO, INFO_TEXT_2);
-		/* po dodaniu wróci do strony początkowej, nowy widok//dodałem nowy kod do strony bookadded - mogą wystąpić błędy */
+		
 		return ViewNames.BOOK_ADDED;
 	}
 

@@ -37,7 +37,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/webjars/**", "/img/*", "/css/*").permitAll()
+                .antMatchers("/","/books","/books/book", "/webjars/**", "/img/*", "/css/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()

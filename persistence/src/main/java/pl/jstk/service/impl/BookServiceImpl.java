@@ -1,8 +1,6 @@
 package pl.jstk.service.impl;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,30 +40,29 @@ public class BookServiceImpl implements BookService {
 
 	}
 
-	public List<BookTo> findBooksByAuthorAndTitle(BookTo wantedBooks) {
+	public List<BookTo> findBooksByAuthorAndTitle(BookTo searchedBooks) {
 
-		if (wantedBooks == null) {
-			return BookMapper.map2To(bookRepository.findAll());
+		String title = searchedBooks.getTitle().toLowerCase();
+		String authors = searchedBooks.getAuthors().toLowerCase();
+		List<BookTo> searchedBooksList = null;
+		/*if (title.equals("") && authors.equals("")) {
+			searchedBooksList = findAllBooks();
+		}*/
+		if (title.equals("") && !authors.equals("")) {
+			searchedBooksList = findBooksByTitle(authors);
 		}
+		if (!title.equals("") && authors.equals("")) {
+			searchedBooksList = findBooksByTitle(title);
+		}
+		if (!title.equals("") && !authors.equals("")) {
+			searchedBooksList = findBooksByTitle(title);
+			searchedBooksList = searchedBooksList.stream()
+												.filter(book -> book.getAuthors().toLowerCase().contains(authors))
+												.collect(Collectors.toList());
 
-		String title = wantedBooks.getTitle();
-		String author = wantedBooks.getAuthors();
-		List<BookTo> listByTitle = findBooksByTitle(title);
-		List<BookTo> listByAuthor = findBooksByAuthor(author);
-		List<BookTo> all= findAllBooks();
+		}
+		return searchedBooksList;
 
-		if (title.equals("")) {
-			return findBooksByAuthor(author);
-		}
-		if (author.equals("")) {
-			return findBooksByTitle(title);
-		} else if  (!title.equals("") && !author.equals("")) {
-		return listByTitle = listByTitle.stream().filter(book -> listByAuthor.contains(author))
-					.collect(Collectors.toList());
-			/*return all=all.stream().filter(book -> listByAuthor.contains(book) && listByTitle.contains(book))
-					.collect(Collectors.toList());*/
-		}
-		return null;
 	}
 
 	@Override

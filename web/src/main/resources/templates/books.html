@@ -28,14 +28,14 @@
 								<p th:text="${book.status}">Status:</p>
 								<p>
 									<a th:href="@{'/books/book?id='+${book.id}}"
-										class="btn btn-primary"> <span
+										class="btn btn-primary btn-lg"> <span
 										class="glyphicon-info-sign glyphicon" /></span> Details
 									</a>
 								</p>
 								<p>
 								<form th:method="delete" th:action="@{/books/deleteBook}">
 									<input type="hidden" name="id" th:value="${book.id}" />
-									<button class="glyphicon glyphicon-remove-circle" type="submit">Delete</button>
+									<button class="btn btn-danger btn-lg" type="submit">Delete</button>
 								</form>
 								</p>
 
