@@ -22,16 +22,16 @@ import pl.jstk.to.BookTo;
 @Controller
 public class BookController {
 	private static final String INFO_TEXT_0 = "There are displayed books in the library";
+	private static final String INFO_TEXT_1 = "Searching result:";
 	private static final String INFO_TEXT_2 = "Here You shall add a new book";
 	private static final String INFO_TEXT_3 = "Here You shall display action of removing chosen book";
-	private static final String INFO_TEXT_4 = "Here You shall display action of searching book";
+	private static final String INFO_TEXT_4 = "You can search for a book";
 	private static final String ACCESS_DENIED="Only admin can remove book!";
 	protected static final String ALL_BOOKS = "Library page";
 	protected static final String BOOK_DETAILS = "Information about chosen book:";
 	protected static final String ADD_BOOK = "This is a page where you can add new book";
 	protected static final String DELETE_BOOK = "This is a page where you can delete book";
 	protected static final String REMOVE_BOOKS = "This is a page where you remove chosen book";
-	protected static final String FIND_BOOK = "This is a page where you can search for a book";
 	protected static final String SUCCESSFULLY_ADDED = "the book was successfully added to the library.";
 	
 
@@ -103,7 +103,6 @@ public class BookController {
 	@GetMapping(value = "/books/search")
 	public String findBook(Model model) {
 		model.addAttribute("newBook", new BookTo());
-		model.addAttribute(ModelConstants.MESSAGE, FIND_BOOK);
 		model.addAttribute(ModelConstants.INFO, INFO_TEXT_4);
 
 		return ViewNames.FIND_BOOK;
@@ -112,12 +111,9 @@ public class BookController {
 	@GetMapping(value = "/searching")
 	public String searchBook(@ModelAttribute("wantedBooks") BookTo wantedBooks, Model model) {
 		List<BookTo> books = bookService.findBooksByAuthorAndTitle(wantedBooks);
-		// model.addAttribute("newBook",new BookTo());
-		model.addAttribute(ModelConstants.MESSAGE, "wiadomość testowa");
-		model.addAttribute(ModelConstants.INFO, "info testowe");
+		
+		model.addAttribute(ModelConstants.INFO, INFO_TEXT_1);
 		model.addAttribute(ModelConstants.BOOKS_LIST, books);
-		// po dodaniu wróci do strony początkowej
-		// return ViewNames.BOOK_ADDED;
 		return ViewNames.FOUND_BOOKS;
 	}
 

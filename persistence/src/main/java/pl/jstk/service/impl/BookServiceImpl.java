@@ -1,5 +1,6 @@
 package pl.jstk.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,13 +42,18 @@ public class BookServiceImpl implements BookService {
 	}
 
 	public List<BookTo> findBooksByAuthorAndTitle(BookTo searchedBooks) {
+		List<BookTo> searchedBooksList = new ArrayList<>();
+		
 
 		String title = searchedBooks.getTitle().toLowerCase();
 		String authors = searchedBooks.getAuthors().toLowerCase();
-		List<BookTo> searchedBooksList = null;
-		/*if (title.equals("") && authors.equals("")) {
-			searchedBooksList = findAllBooks();
-		}*/
+		
+		if (title.isEmpty() && authors.isEmpty()) {
+			return searchedBooksList;
+		}
+		if (title=="" && authors=="") {
+				searchedBooksList = null;
+			}
 		if (title.equals("") && !authors.equals("")) {
 			searchedBooksList = findBooksByAuthor(authors);
 		}
