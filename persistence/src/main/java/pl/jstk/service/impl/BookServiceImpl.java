@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
 			searchedBooksList = findAllBooks();
 		}*/
 		if (title.equals("") && !authors.equals("")) {
-			searchedBooksList = findBooksByTitle(authors);
+			searchedBooksList = findBooksByAuthor(authors);
 		}
 		if (!title.equals("") && authors.equals("")) {
 			searchedBooksList = findBooksByTitle(title);
