@@ -15,14 +15,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableWebMvc
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-        prePostEnabled = true,
-        securedEnabled = true,
-        jsr250Enabled = true)
+	prePostEnabled = true,
+	securedEnabled = true,
+	jsr250Enabled = true
+)
 public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
+	
+	@Autowired
+	DataSource datasource;
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -37,36 +43,43 @@ public class WebConfig extends WebSecurityConfigurerAdapter implements WebMvcCon
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/","/books","/books/book","/books/search","/searching", "/webjars/**", "/img/*", "/css/*").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers(
+                		"/",
+						"/books",
+						"/books/book",
+						"/books/search",
+						"/searching",
+						"/webjars/**",
+						"/img/*",
+						"/css/*"
+				).permitAll()
+                .anyRequest()
+				.authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().permitAll();
+
+        http.authorizeRequests()
+				.antMatchers("/greetings").hasRole("ADMIN");
     }
-	@Bean
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-	@Autowired
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
                 .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
                 .and()
                 .withUser("user").password(passwordEncoder().encode("user")).roles("USER");
+        /*  auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery("select user_name,password, enabled from USER where user_name=?")
+                .authoritiesByUsernameQuery("select user_name,role from USER where user_name=?");
+        */
     }
-	
-	/*@Autowired 
-	DataSource dataSource;
-	
-	@Autowired
-	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		    auth.jdbcAuthentication().dataSource(dataSource)
-		    .usersByUsernameQuery(           
-		    		"select username,password, enabled from user where username=?")   
-		    .authoritiesByUsernameQuery(
-		    		"select username, role from user_roles where username=?");
-		    }*/
 
 }

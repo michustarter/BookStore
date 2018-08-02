@@ -7,7 +7,7 @@ public final class ViewNames implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/* 
-	 Error resolving template "dupa", template might not exist or might not be accessible by any of the configured Template Resolvers
+	 Error resolving template ", template might not exist or might not be accessible by any of the configured Template Resolvers
 	at org.thymeleaf.engine.TemplateManager.resolveTemplate(TemplateManager.java:870)
 	
 	--czyli nazwa musi być zgodna z plikami w web/scr/main/resources !!!
@@ -21,4 +21,6 @@ public final class ViewNames implements Serializable {
 	public static final String BOOK_ADDED="bookAdded";
 	public static final String FOUND_BOOKS="foundBooks";
 	public static final String ERROR_403="403";
+	public static final String REMOVED_BOOK="removedBook";
+	public static final String LOGGED_IN="loggedIn";
 }

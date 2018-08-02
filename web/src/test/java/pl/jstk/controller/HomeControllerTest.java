@@ -1,6 +1,12 @@
 package pl.jstk.controller;
 
-import pl.jstk.constants.ModelConstants;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,36 +17,43 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.hamcrest.core.StringContains.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import pl.jstk.constants.ModelConstants;
+import pl.jstk.constants.ViewNames;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 public class HomeControllerTest {
 
-    private MockMvc mockMvc;
+	private MockMvc mockMvc;
 
-    @Before
-    public void setup() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new HomeController()).build();
-    }
+	@Before
+	public void setup() {
+		mockMvc = MockMvcBuilders.standaloneSetup(new HomeController()).build();
+	}
 
-    @Test
-    public void testHomePage() throws Exception {
-        // given when
-        ResultActions resultActions = mockMvc.perform(get("/"));
-        // then
-        resultActions.andExpect(status().isOk())
-                     .andExpect(view().name("welcome"))
-                     .andDo(print())
-                     .andExpect(model().attribute(ModelConstants.MESSAGE, HomeController.WELCOME))
-                     .andExpect(content().string(containsString("")));
+	@Test
+	public void testHomePage() throws Exception {
+		// when
+		ResultActions resultActions = mockMvc.perform(get("/"));
 
-    }
+		// then
+		resultActions
+				.andExpect(status().isOk())
+				.andExpect(view().name("welcome"))
+				.andDo(print())
+				.andExpect(model().attribute(ModelConstants.MESSAGE, HomeController.WELCOME))
+				.andExpect(content().string(containsString("")));
+	}
 
+	@Test
+	public void shouldLoginUser() throws Exception {
+		// when
+		ResultActions resultActions = mockMvc.perform(get("/login"));
+
+		// then
+		resultActions
+				.andExpect(status().isOk())
+				.andExpect(model().attribute(ModelConstants.MESSAGE, HomeController.LOGGED_CORRECTLY))
+				.andExpect(view().name(ViewNames.LOGGED_IN));
+	}
 }
